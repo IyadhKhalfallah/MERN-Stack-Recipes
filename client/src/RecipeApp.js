@@ -6,7 +6,7 @@ import React, { Component } from 'react';
 //import scrollToComponent from 'react-scroll-to-component';
 import './style.css';
 import axios from 'axios';
-
+import 'bootstrap/dist/css/bootstrap.css';
 import UserProfile from './UserProfile';
 import RecipeCard from './RecipeCard';
 import UserMenu from './UserMenu';
@@ -14,6 +14,7 @@ import ErrorMessage from './ErrorMessage';
 import UserLogin from './UserLogin';
 import UserInfo from './UserInfo';
 import AddRecipeForm from './AddRecipeForm';
+import 'font-awesome/css/font-awesome.min.css';
 
 import { loadProgressBar } from 'axios-progress-bar';
 import 'axios-progress-bar/dist/nprogress.css';
@@ -24,7 +25,7 @@ class RecipeApp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoggedIn: false,
+      isLoggedIn: true,
       isProduction: true, //use this variable to control url type
       //app_url: 'https://fccwebapps-mtanzim.c9users.io',
       loginMethod: "",
@@ -67,7 +68,7 @@ class RecipeApp extends React.Component {
   componentDidMount() {
     loadProgressBar();
     axios.get('/getCurUser')
-      axios.get(`/api/${this.state.userID}`)
+      //axios.get(`/api/${this.state.userID}`)
       .then(res => {
         ////console.log(res.data);
         ////console.log((typeof(res.data)==='object') && res.data.user.id!==undefined);

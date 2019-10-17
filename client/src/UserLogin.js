@@ -22,27 +22,9 @@ class UserLogin extends React.Component {
 
   handleLogIn(event) {
     event.preventDefault();
-    //console.log(this.state);
-    const PROXY_URL = 'https://cors-anywhere.herokuapp.com/';
-    const URL = 'http://127.0.0.1:8080/signup';
-    axios({
-      method: 'post',
-      url: PROXY_URL+URL,
-      data: {
-        email: this.state.email,
-        password: this.state.password
-      }
-    }).then(res => {
-      console.log(res.data.content);
-      this.setState({ email: '', password: '' });
-      //this.setUserID(res.data.content.toString());
+
       window.location = '/';
-      //return res;
-    }).catch((err) => {
-      //console.log(err.response.data);
-      this.setState({ password: '', error: err.response.data.error });
-      this.handleError();
-    });
+
 
   }
 
