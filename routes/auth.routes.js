@@ -1,7 +1,8 @@
 const passport=require('passport')
 const express=require('express')
 
-import { deleteUser, updateUserForAuth } from "../controllers/user.controller";
+const deleteUser=require('../controllers/user.controller').deleteUser
+const updateUserForAuth=require('../controllers/user.controller').updateUserForAuth
 
 
 module.exports = function (passport) {

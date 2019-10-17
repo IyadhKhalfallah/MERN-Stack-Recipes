@@ -1,5 +1,9 @@
 const express = require('express');
 const routes = require('./routes/index');
+const routeUser = require('./routes/user.routes');
+const routeIng=require('./routes/ingredients.routes')
+const routeRecipe=require('./routes/recipes.routes')
+const routeAuth=require('./routes/auth.routes')
 const mongoose = require('mongoose');
 const passport = require('passport');
 const session = require('express-session');
@@ -38,6 +42,11 @@ module.exports = (config) => {
     app.use(passport.session());
   
     app.use('/api', routes);
+    app.use('/api/users',routeUser)
+    app.use('/api/recipes',routeRecipe)
+    app.use('/api/ing',routeIng)
+    app.use('/api/auth',routeAuth(passport))
+
     
     // app.use('/apitest', routes(passport, 'test'));
   

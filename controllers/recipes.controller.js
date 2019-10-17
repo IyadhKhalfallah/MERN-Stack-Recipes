@@ -1,7 +1,7 @@
 // const Users = require('../models/users');
 const Recipes = require('../models/recipes');
 
-const userFieldsSelect = 'local.username';
+const userFieldsSelect = 'username';
 
 function createRecipe(userId, recipeBody) {
   recipeBody._user = userId;

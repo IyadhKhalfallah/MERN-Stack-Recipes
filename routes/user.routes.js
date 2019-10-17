@@ -1,6 +1,9 @@
-import express from 'express';
-import { listUsers, createUser, deleteUser, updateUser, getOneUser } from "../../controllers/mongoose/user.controller";
-
+const express=require('express');
+const listUsers=require('../controllers/user.controller').listUsers
+const createUser=require('../controllers/user.controller').createUser
+const deleteUser=require('../controllers/user.controller').deleteUser
+const updateUser=require('../controllers/user.controller').updateUser
+const getOneUser=require('../controllers/user.controller').getOneUser
 const router = express.Router();
 
 router.route('/')
@@ -10,7 +13,11 @@ router.route('/')
       .catch(err => next(err));
   })
   .post((req, res, next) => {
-    createUser(req.body)
+    createUser({
+      username:req.body.username,
+      email:req.body.email,
+      password:req.body.password
+    })
       .then(user => res.json(user))
       .catch(err => next(err));
   });

@@ -11,7 +11,7 @@ function createUser(userBody) {
 function deleteUser(userId) {
   // return Users.findByIdAndRemove(userId)//.exec();
   return Users.findById(userId)
-    .select('-local.password')
+    .select('-password')
     //.exec()
     .then((doc) => {
       if (!doc) {
@@ -61,7 +61,7 @@ function listUsers() {
   return Users
     .find({})
     .sort({ 'createdAt': -1 })
-    .select('-local.password')
+    .select('-password')
     //.exec();
 }
 
@@ -72,7 +72,7 @@ function getOneUser(id) {
 // used for auth, need password
 function getOneUserByEmailForAuth(email) {
   return Users
-    .findOne({ 'local.email': email })
+    .findOne({ 'email': email })
 }
 
 

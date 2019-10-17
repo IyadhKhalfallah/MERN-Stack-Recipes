@@ -15,11 +15,7 @@ const ingRoutes='./ingredients.routes';
   const router = express.Router();
 
     router
-      .get('/health-check', (req, res, next) => res.send('OK!'))
-      .use('/users', userRoutes)
-      .use('/recipes', recipeRoutes)
-      .use('/ing', ingRoutes)
-      .use('/auth', authRoutes(passport));
+      .get('/health-check', (req, res, next) => res.send('OK!'));
 
 
 module.exports=router

@@ -1,13 +1,11 @@
-import express from 'express';
-import {
-  getAllIng,
-  createIng,
-  getIngByRecipe,
-  deleteAllIngForRecipe,
-  getOneIng,
-  updateOneIng,
-  deleteOneIng,
-} from "../../controllers/mongoose/ingredients.controller";
+const express=require('express')
+const getAllIng=require('../controllers/ingredients.controller').getAllIng
+const createIng=require('../controllers/ingredients.controller').createIng
+const getIngByRecipe=require('../controllers/ingredients.controller').getIngByRecipe
+const deleteAllIngForRecipe=require('../controllers/ingredients.controller').deleteAllIngForRecipe
+const getOneIng=require('../controllers/ingredients.controller').getOneIng
+const updateOneIng=require('../controllers/ingredients.controller').updateOneIng
+const deleteOneIng=require('../controllers/ingredients.controller').deleteOneIng
 
 const router = express.Router();
 

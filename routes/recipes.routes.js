@@ -1,13 +1,12 @@
-import express from 'express';
-import {
-  getAllRecipes,
-  createRecipe,
-  getRecipeByUser,
-  getOneRecipe,
-  deleteAllRecipesForUser,
-  deleteOneRecipe,
-  updateOneRecipe
-} from "../../controllers/mongoose/recipes.controller";
+const express=require('express')
+const getAllRecipes=require('../controllers/recipes.controller').getAllRecipes
+const createRecipe=require('../controllers/recipes.controller').createRecipe
+const getRecipeByUser=require('../controllers/recipes.controller').getRecipeByUser
+const getOneRecipe=require('../controllers/recipes.controller').getOneRecipe
+const deleteAllRecipesForUser=require('../controllers/recipes.controller').deleteAllRecipesForUser
+const deleteOneRecipe=require('../controllers/recipes.controller').deleteOneRecipe
+const updateOneRecipe=require('../controllers/recipes.controller').updateOneRecipe
+
 
 const router = express.Router();
 const recipeError = new Error('No recipes found!');

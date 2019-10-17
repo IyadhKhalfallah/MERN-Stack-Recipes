@@ -12,7 +12,6 @@ const SALT_ROUNDS = 10;
 // const deleteAllRecipesForUser = require("../controllers/recipes.controller").deleteAllRecipesForUser;
 
 var User = new Schema({
-  local: {
     username: {
       required: [true, 'Username can not be empty'],
       minlength: [3, "Username too short!"],
@@ -27,12 +26,12 @@ var User = new Schema({
     },
     password: {
       type: String,
-      required: [true, 'Password can not be empty'],
+      required: [false, 'Password can not be empty'],
       // select: true,
       minlength: [4, "Password too short!"],
     }
   },
-},
+
   {
     timestamps: true,
 
@@ -41,9 +40,9 @@ var User = new Schema({
 // pre-save hooks
 User.pre('save', function (next) {
   // const saltRounds = 10; // should be moved to config file later
-  bcrypt.hash(this.local.password, SALT_ROUNDS)
+  bcrypt.hash(this.password, SALT_ROUNDS)
     .then(hash => {
-      this.local.password = hash;
+      this.password = hash;
       next();
     });
 });
@@ -67,7 +66,7 @@ User.virtual('displayName').get(function () {
     nameToReturn = this.github.displayName;
     accountType = 'git';
     if (nameToReturn === undefined) {
-      nameToReturn = this.local.email;
+      nameToReturn = this.email;
       accountType = 'local';
     }
   }
@@ -84,12 +83,12 @@ User.methods.generateHash = function (password) {
 // checking if password is valid
 User.methods.validPassword = function (password) {
   // console.log (this.get('local'));
-  return bcrypt.compareSync(password, this.local.password);
+  return bcrypt.compareSync(password, this.password);
 };
 
 
 User.methods.changePassword = function (password) {
-  this.local.password = this.generateHash(password);
+  this.password = this.generateHash(password);
   //this.set(this.local.password, salt);
 }
 

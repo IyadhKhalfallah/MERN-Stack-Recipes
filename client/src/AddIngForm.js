@@ -13,13 +13,13 @@ class AddIngForm extends React.Component {
       <form action='#'>
         <div className="form-row">
           <div className="form-group col-12">
-            <input required autoFocus type="text" className="form-control" id="ingName" placeholder="Ingredient Name"></input>
+            <input required autoFocus onChange={this.props.handleIngTitle} type="text" className="form-control" id="ingName" placeholder="Ingredient Name"></input>
           </div>
           <div className="form-group col">
-            <input required type="number" step="0.01" className="form-control" id="qty" placeholder="Qty"></input>
+            <input required onChange={this.props.handleIngQty} type="number" step="0.01" className="form-control" id="qty" placeholder="Qty"></input>
           </div>
           <div className="form-group col">
-            <input type="text" className="form-control" id="unit" placeholder="Unit"></input>
+            <input onChange={this.props.handleIngUnit} type="text" className="form-control" id="unit" placeholder="Unit"></input>
           </div>
         </div>
       </form>
