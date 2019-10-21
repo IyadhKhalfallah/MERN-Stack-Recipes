@@ -13,12 +13,13 @@ class UserMenu extends React.Component {
 
   componentDidMount() {
     //console.log('Menu initiated');
-    axios.get('/getUsers')
+    axios.get('http://localhost:8080/api/users')
       .then(res => {
-        ////console.log(res.data.content);
-        this.setState({ users: res.data.content });
+        console.log("Here")
+        console.log(Object.values(res.data));
+        this.setState({ users:[]});
         this.state.users.forEach(user => {
-          //console.log(user._id);
+          console.log(user._id);
         })
       }).catch(err => {
         console.error(err);
@@ -30,13 +31,15 @@ class UserMenu extends React.Component {
   eachUser = (user) => {
     ////console.log (user._id);
     ////console.log (this.props.curUser);
+    console.log("MyUser")
+    console.log(user)
     return (
       (this.props.curUser !== user._id) &&
       (
         <UserList
           key={user._id}
           id={user._id}
-          display={user.displayName.name}
+          display={user.username}
           getRecipes={this.props.getFriendRecipe}
         ></UserList>
       )
@@ -54,6 +57,7 @@ class UserMenu extends React.Component {
           <li className="nav-item dropdown">
             <a className="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">All Recipes</a>
             <div className="dropdown-menu">
+            <a className="dropdown-item" href="http://google.com">Action</a>
               {this.state.users.map(this.eachUser)}
             </div>
           </li>

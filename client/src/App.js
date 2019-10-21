@@ -13,6 +13,7 @@ class App extends Component {
     //console.log(this.state.recipes);
   }
   render() {
+    console.log("TEST RECIPE")
     console.log(this.state.recipes);
     return (
       <div className="App">

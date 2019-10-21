@@ -15,6 +15,7 @@ const path = require('path');
 module.exports = (config) => {
 
     const app = express();
+
     if (process.env.NODE_ENV !== 'production' && !config.isTesting) {
       app.use(config.logger)
     }
@@ -22,7 +23,7 @@ module.exports = (config) => {
     if (process.env.NODE_ENV === 'production') {
       app.use('/static', express.static(process.cwd() + '/client/build/static'));
     }
-  
+
   
     app.use(favicon(path.join(__dirname, 'client', 'build', 'favicon.ico')));
     if (process.env.NODE_ENV === 'production') {
@@ -39,7 +40,13 @@ module.exports = (config) => {
     }));
   
     app.use(passport.initialize());
-    app.use(passport.session());
+    app.use(function(req, res, next) {
+      res.header("Access-Control-Allow-Origin", "*");
+      res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+      res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+      
+      next();
+    });
   
     app.use('/api', routes);
     app.use('/api/users',routeUser)

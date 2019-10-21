@@ -7,7 +7,7 @@ var Recipes = new Schema({
   // user is the foreign key
   _user: {
     type: Schema.Types.ObjectId, 
-    ref: 'User',
+    ref: 'users',
     required: [true, 'Recipe must have an owner!'], 
   },
   title: { 
@@ -45,9 +45,7 @@ Recipes.statics.removeAllforUser  = function (userId) {
     });
 }
 
-Recipes.pre('save', function (next) {
-  confirmUser(this._user, next);
-});
+
 
 Recipes.pre('remove', function (next) {
 

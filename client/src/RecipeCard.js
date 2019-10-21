@@ -2,7 +2,8 @@
 
 import React, { Component } from 'react';
 //import scrollToComponent from 'react-scroll-to-component';
-import './style.css';
+
+import './style.module.css'
 //import axios from 'axios';
 
 import Ingredient from './Ingredient';
@@ -99,18 +100,12 @@ class RecipeCard extends React.Component {
         <div className="card">
           <div className="card-header">
             <h3>{this.props.title}</h3>
-            {this.props.pageCtrl === 0 ?
+            {
               (<div className="row">
                 <button className="ml-2 btn" onClick={this.handleClickEditRecipe} ><i className="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                 <button className="ml-2 btn btn-danger" onClick={this.removeRecipe}><i className="fa fa-trash-o" aria-hidden="true"></i></button>
               </div>
-              ) : (
-
-                <div className="row">
-                  <button className="ml-2 btn" onClick={this.copyRecipe} ><i className="fa fa-files-o" aria-hidden="true"></i></button>
-                </div>
-
-              )
+              ) 
             }
           </div>
           <div className="card-body">
@@ -139,7 +134,7 @@ class RecipeCard extends React.Component {
               <button onClick={this.addIngredient} className="btn btn-success"><i className="fa fa-floppy-o" aria-hidden="true"></i></button>
             </div>)}
             <div className='mt-4'>
-              {this.props.ingredients.map(this.eachIng)}
+
             </div>
           </div>
         </div>
