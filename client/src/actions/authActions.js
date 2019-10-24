@@ -7,7 +7,7 @@ import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from "./types";
 // Register User
 export const registerUser = (userData, history) => dispatch => {
   axios
-    .post("/api/users/register", userData)
+    .post("/users/register", userData)
     .then(res => history.push("/login"))
     .catch(err =>
       dispatch({
@@ -20,8 +20,9 @@ export const registerUser = (userData, history) => dispatch => {
 // Login - get user token
 export const loginUser = userData => dispatch => {
   axios
-    .post("/api/users/login", userData)
+    .post("/users/login", userData)
     .then(res => {
+      console.log("TEST LOGIN")
       // Save to localStorage
 
       // Set token to localStorage

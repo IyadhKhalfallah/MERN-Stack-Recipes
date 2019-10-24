@@ -8,6 +8,7 @@ import RecipeCard from '../../RecipeCard';
 import UserMenu from '../../UserMenu';
 import { loadProgressBar } from 'axios-progress-bar';
 import '../../style.module.css'
+import jwt_decode from "jwt-decode";
 
 import AddRecipeForm from '../../AddRecipeForm';
 class Dashboard extends Component {
@@ -22,6 +23,7 @@ class Dashboard extends Component {
       recipeToCopy: {},
       newRecipeName: '',
       newIng: { title: '', qty: '', unit: '' },
+      ingredients:[],
       editing: false,
       pageCtrl: 0 //allows users to toggle between pages
       //addRecipeStyleState: {display:'none'}
@@ -53,8 +55,8 @@ class Dashboard extends Component {
   componentDidMount() {
 
     loadProgressBar();
-
-    axios.get('http://localhost:8080/api/recipes')
+    let user=jwt_decode(localStorage.jwtToken.replace("Bearer ",""))['id']
+    axios.get(`http://localhost:8080/api/recipes/${user}`)
       //axios.get(`/api/${this.state.userID}`)
       .then((res) => {
         ////console.log(res.data);
@@ -63,22 +65,26 @@ class Dashboard extends Component {
           //console.log(res.data);
           //this.setState({userID:res.data._id});
           console.log(res.data)
-          this.setState({recipes: res.data})
+          this.setState({recipes: res.data, userID: user})
 
 
 
       }).catch(err => {
         console.error(err);
       });
+
   }
   getFriendRecipe = (id) => {
     //console.log (id);
-    axios.get(`/api/${id}`)
+    axios.get(`http://localhost:8080/api/recipes/${id}`)
       .then(res => {
         this.setState({
-          friendUser: res.data.content,
+          friendUser: res.data,
           pageCtrl: 1
+          
         });
+        console.log("FriendUser Here")
+        console.log(this.state.friendUser)
       }).catch(err => {
         console.error(err);
       });
@@ -154,7 +160,8 @@ parseJwt(token) {
   addRecipeBase = (newRecipe) => {
     //var newRecipe={title:this.state.newRecipeName, ingredients:[{}]};
     //var newRecipe={title:this.state.newRecipeName};
-    axios.post(`http://localhost:8080/api/recipes/${this.props.tokenizer}`, newRecipe)
+    let userID=jwt_decode(localStorage.jwtToken.replace("Bearer ",""))['id']
+    axios.post(`http://localhost:8080/api/recipes/${userID}`, newRecipe)
       .then(res => {
         //console.log(res.data);
         this.setState({
@@ -228,19 +235,19 @@ parseJwt(token) {
   addIngredient(id) {
 
     //send new ingredient to the database, and the id of the recipe being added
-    axios.post(`/api/${this.state.userID}/recipe/${id}`, this.state.newIng)
+    axios.post(`/ing/${id}`, this.state.newIng)
       .then(res => {
 
         //console.log(res.data);
         this.setState({
           isError: res.data.isError,
-          errMsg: res.data.content.errors
+
         });
         if (res.data.isError === false) {
-          //var newIng = res.data.ingredients;
+          var newIng = res.data;
           var recipeUpdated = this.state.recipes.map(function (recipe) {
             if (recipe._id === id) {
-              //var addedIng=recipe.ingredients.concat(newIng);
+              var addedIng=recipe.ingredients.concat(newIng);
               var newIng = res.data.content.ingredients;
               return { ...recipe, ingredients: newIng };
             } else {
@@ -269,7 +276,7 @@ parseJwt(token) {
         if (res.data.isError === false) {
           var recipeUpdated = this.state.recipes.map(function (recipe) {
             if (recipe._id === id) {
-              //var addedIng=recipe.ingredients.concat(newIng);
+              var addedIng=recipe.ingredients.concat(newIng);
               var newIng = res.data.content.ingredients;
               return { ...recipe, ingredients: newIng };
             } else {
@@ -351,7 +358,7 @@ parseJwt(token) {
         if (res.data.isError === false) {
           var recipeUpdated = this.state.recipes.map(function (recipe) {
             if (recipe._id === id) {
-              //var addedIng=recipe.ingredients.concat(newIng);
+              var addedIng=recipe.ingredients.concat(newIng);
               var newIng = res.data.content.ingredients;
               return { ...recipe, ingredients: newIng };
             } else {
@@ -369,12 +376,20 @@ parseJwt(token) {
   }
 
   eachRecipe(recipe) {
+    let ing=[]
+    this.state.ingredients.forEach(function(element){
+      if (element['_recipe']==recipe._id){
+        ing.push(element)
+      }
+    })
+    console.log("SPECIFIC ING")
+    console.log(recipe.ingredients)
     return (
       <RecipeCard
         key={recipe._id}
         id={recipe._id}
         title={recipe.title}
-        ingredients={recipe.ingredients}
+        ingredients={recipe.ingredients}  //mochkla
         addIng={this.addIngredient}
         remRecipe={this.remRecipe}
         delAllIng={this.delAllIngredient}
@@ -399,19 +414,26 @@ parseJwt(token) {
         <div className="row">
           <div className="landing-copy col s12 center-align">
             <h4>
+            {<UserMenu toggleMyRecipe={this.toggleMyRecipe}
+          toggleMyProfile={this.toggleMyProfile}
+
+          curUser={this.state.userID}
+          getFriendRecipe={this.getFriendRecipe}
+        />}
             {(<div className="mt-4">
           <AddRecipeForm onChange={this.handleAddRecipe} onSaveButton={this.addRecipe} />
         </div>)}
-        {
-          (<div className="row">
-            {this.state.recipes.map(this.eachRecipe)}
-          </div>)}
+                {
+          (<div className="row">
+            {this.state.recipes.map(this.eachRecipe)}
+          </div>)}
+
         {this.state.pageCtrl === 1 &&
           (
             <div>
-              <h3 className="mt-2">{this.state.friendUser.displayName.name}'s Recipes</h3>
+              <h3 className="mt-2">Selected friend's recipes</h3>
               <div className="row">
-                {this.state.friendUser.recipes.map(this.eachRecipe)}
+                {this.state.friendUser.map(this.eachRecipe)}
               </div>
             </div>)}
         {this.state.pageCtrl === 2 &&

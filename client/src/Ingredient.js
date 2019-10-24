@@ -90,6 +90,7 @@ class Ingredient extends React.Component {
 
     );
   }
+
 }
 
 

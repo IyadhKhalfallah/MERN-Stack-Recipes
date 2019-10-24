@@ -1,0 +1,30 @@
+.container 
+{
+    margin-left: 0px;
+
+}
+
+i{
+    margin-right: 10px;
+    margin-left: 10px;
+    color: black;
+}
+
+.img
+{
+    width: 110px;
+    height: 120px;
+    display: inline-block;
+}
+
+.h
+{
+    margin-top: 30px;
+    margin-left: 400px;
+  
+}
+
+.coll
+{
+    margin-left: 10px;
+}

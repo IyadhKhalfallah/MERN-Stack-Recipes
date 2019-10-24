@@ -17,7 +17,8 @@ class RecipeCard extends React.Component {
       editingName: false,
       AddingIng: false,
       editedRecipeName: this.props.title,
-      editedIng: this.props.ingredients
+      editedIng: this.props.ingredients,
+      existsIng:0
       //editRecipeStyleState: {display:'none'},
       //addIngStyleState: {display:'none'}
     };
@@ -33,7 +34,12 @@ class RecipeCard extends React.Component {
   }
 
   eachIng(ing) {
+    console.log("INGREDIENT EXISTS")
     if (Object.keys(ing).length !== 0) {
+      this.setState({
+        existsIng:1
+      })
+
       return (
         <Ingredient ing={ing}
           key={ing._id}
@@ -134,7 +140,8 @@ class RecipeCard extends React.Component {
               <button onClick={this.addIngredient} className="btn btn-success"><i className="fa fa-floppy-o" aria-hidden="true"></i></button>
             </div>)}
             <div className='mt-4'>
-
+              
+            {this.props.ingredients && this.props.ingredients.map(this.eachIng)}
             </div>
           </div>
         </div>

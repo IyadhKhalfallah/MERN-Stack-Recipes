@@ -1,11 +1,8 @@
-/*Tanzim Mokammel
-mtanzim@gmail.com
-Nov 2017
-*/
 import React, { Component } from 'react';
-import './style.css';
 import axios from 'axios';
 import PasswordForm from './PasswordForm';
+import classes from './css/userProfile.module.css'; /*import*/
+/*import classes from './css/userProfile.module.css';*/
 
 class UserProfile extends React.Component {
   constructor(props) {
@@ -47,30 +44,30 @@ class UserProfile extends React.Component {
   render() {
 
     return (
-      <div className="row">
+      <div>
         <div className='col-12 col-sm-6'>
           <div className="card">
-            <div className="card-header">
-              <h3>{this.props.userInfo}</h3>
+            <div className={classes.cardHeader}>
+              <h3 className={classes.Info}>{this.props.userInfo}</h3>
               <i className={this.props.userIcon} aria-hidden="true"></i>
             </div>
             <div className="card-block">
-              <p className="card-text ml-3 mt-2">Total Recipes: {this.props.numRecipes}</p>
-              {this.props.loginType === 'local' && (<button className="btn ml-3 mb-2" onClick={this.showPassForm}>Change Password</button>)}
+              <p className="card-text ml-3 mt-2">Total Recipes : {this.props.numRecipes}</p>
+              {this.props.loginType === 'local' && (<button className="btn ml-3 mb-2" className={classes.button} onClick={this.showPassForm}>Change Password</button>)}
               {this.state.changePassToggle && (<PasswordForm
                 showPassForm={this.showPassForm}
                 handleError={this.props.handleError}
                 userID={this.props.userID} />)}
               {!this.state.changeDeleteToggle &&
-                (<p><button className="btn btn-danger ml-3" onClick={this.showDelTog}>Delete Account</button></p>
+                (<p><button className="btn btn-danger ml-3" className={classes.button} onClick={this.showDelTog}>Delete Account</button></p>
                 )}
               {this.state.changeDeleteToggle &&
                 (<p>
-                  <button className="btn btn-success ml-3 mb-2" onClick={this.showDelTog}>Keep Account</button>
+                  <button className="btn btn-success ml-3 mb-2" className={classes.button} sonClick={this.showDelTog}>Keep Account</button>
                 </p>)}
               {this.state.changeDeleteToggle &&
                 (<p>
-                  <button className="btn btn-danger ml-3" onClick={this.deleteAccount}>Confirm Delete!</button>
+                  <button className="btn btn-danger ml-3" className={classes.button} onClick={this.deleteAccount}>Confirm Delete!</button>
                 </p>)}
             </div>
           </div>
@@ -81,5 +78,3 @@ class UserProfile extends React.Component {
 }
 
 export default UserProfile;
-
-

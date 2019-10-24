@@ -13,7 +13,7 @@ import Register from "./components/auth/Register";
 import UserLogin from "./UserLogin";
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import Dashboard from "./components/dashboard/Dashboard";
-
+import './style.module.css'
 import "./App.css";
 
 // Check for token to keep user logged in
@@ -41,12 +41,11 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <div className="App">
-            <Navbar />
             <Route exact path="/" component={Landing} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={UserLogin} />
             <Switch>
-              <PrivateRoute tokenizer={jwt_decode(localStorage.jwtToken)['id']} exact path="/dashboard" component={Dashboard } />
+              <PrivateRoute  exact path="/dashboard" component={Dashboard } />
             </Switch>
           </div>
         </Router>

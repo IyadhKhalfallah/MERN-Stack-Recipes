@@ -9,7 +9,7 @@ const PrivateRoute = ({ component: Component,tokenizer, auth, ...rest }) => (
     render={props =>
       auth.isAuthenticated === true ? (
         <Component 
-        tokenizer={tokenizer} {...props} />
+        tokenizer={props.tokenizer} {...props} />
       ) : (
         <Redirect to="/login" />
       )
