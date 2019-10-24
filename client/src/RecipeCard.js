@@ -36,9 +36,6 @@ class RecipeCard extends React.Component {
   eachIng(ing) {
     console.log("INGREDIENT EXISTS")
     if (Object.keys(ing).length !== 0) {
-      this.setState({
-        existsIng:1
-      })
 
       return (
         <Ingredient ing={ing}
@@ -141,7 +138,7 @@ class RecipeCard extends React.Component {
             </div>)}
             <div className='mt-4'>
               
-            {this.props.ingredients && this.props.ingredients.map(this.eachIng)}
+            {this.props.ingredients.map(this.eachIng)}
             </div>
           </div>
         </div>

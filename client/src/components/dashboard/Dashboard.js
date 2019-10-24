@@ -72,6 +72,22 @@ class Dashboard extends Component {
       }).catch(err => {
         console.error(err);
       });
+      axios.get(`http://localhost:8080/api/ing/`)
+      //axios.get(`/api/${this.state.userID}`)
+      .then((res) => {
+        ////console.log(res.data);
+        ////console.log((typeof(res.data)==='object') && res.data.user.id!==undefined);
+          //console.log('User found');
+          //console.log(res.data);
+          //this.setState({userID:res.data._id});
+          console.log(res.data)
+
+          this.setState({ingredients: JSON.parse(JSON.stringify(res.data))})
+
+
+      }).catch(err => {
+        console.error(err);
+      });
 
   }
   getFriendRecipe = (id) => {
@@ -184,7 +200,7 @@ parseJwt(token) {
   }
   remRecipe(id) {
     //post to the server and delete from the database; delete the same item locally
-    axios.delete(`/api/${this.state.userID}/recipe/${id}`)
+    axios.delete(`http://localhost:8080/api/recipes/single/${id}`)
       .then(res => {
         //console.log(res.data);
         this.setState({
@@ -266,7 +282,7 @@ parseJwt(token) {
   }
 
   delIngredient(id, ingId) {
-    axios.delete(`/api/${this.state.userID}/recipe/${id}/${ingId}`)
+    axios.delete(`http://localhost:8080/api/ing/single/${ingId}`)
       .then(res => {
         //console.log(res.data);
         this.setState({
@@ -275,13 +291,11 @@ parseJwt(token) {
         });
         if (res.data.isError === false) {
           var recipeUpdated = this.state.recipes.map(function (recipe) {
-            if (recipe._id === id) {
+
               var addedIng=recipe.ingredients.concat(newIng);
               var newIng = res.data.content.ingredients;
               return { ...recipe, ingredients: newIng };
-            } else {
-              return recipe;
-            }
+
           });
           this.setState({
             recipes: recipeUpdated
@@ -376,20 +390,19 @@ parseJwt(token) {
   }
 
   eachRecipe(recipe) {
-    let ing=[]
+    let myArray=[]
     this.state.ingredients.forEach(function(element){
-      if (element['_recipe']==recipe._id){
-        ing.push(element)
+      if(element['_recipe']==recipe._id){
+        myArray.push(element)
       }
     })
-    console.log("SPECIFIC ING")
     console.log(recipe.ingredients)
     return (
       <RecipeCard
         key={recipe._id}
         id={recipe._id}
         title={recipe.title}
-        ingredients={recipe.ingredients}  //mochkla
+        ingredients={myArray}  //mochkla
         addIng={this.addIngredient}
         remRecipe={this.remRecipe}
         delAllIng={this.delAllIngredient}
@@ -420,13 +433,13 @@ parseJwt(token) {
           curUser={this.state.userID}
           getFriendRecipe={this.getFriendRecipe}
         />}
-            {(<div className="mt-4">
+            {this.state.pageCtrl === 0 && (<div className="mt-4">
           <AddRecipeForm onChange={this.handleAddRecipe} onSaveButton={this.addRecipe} />
         </div>)}
-                {
-          (<div className="row">
-            {this.state.recipes.map(this.eachRecipe)}
-          </div>)}
+        {this.state.pageCtrl === 0 &&
+          (<div className="row">
+            {this.state.recipes.map(this.eachRecipe)}
+          </div>)}
 
         {this.state.pageCtrl === 1 &&
           (
