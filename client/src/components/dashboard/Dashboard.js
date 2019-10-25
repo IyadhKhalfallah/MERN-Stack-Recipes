@@ -227,12 +227,11 @@ parseJwt(token) {
       });
   }
   editRecipName(id, newName) {
-    axios.put(`/api/${this.state.userID}/recipe/${id}`, { 'title': newName })
+    axios.put(`http://localhost:8080/api/recipes/single/${id}`, { 'title': newName })
       .then(res => {
         //console.log(res.data);
         this.setState({
           isError: res.data.isError,
-          errMsg: res.data.content.errors
         });
         if (res.data.isError === false) {
           var recipeUpdated = this.state.recipes.map(
@@ -308,12 +307,11 @@ parseJwt(token) {
   }
 
   editIngredient(id, ingId, editedIng) {
-    axios.put(`/api/${this.state.userID}/recipe/${id}/${ingId}`, editedIng)
+    axios.put(`http://localhost:8080/api/ing/single/${ingId}`, editedIng)
       .then(res => {
         //console.log(res.data);
         this.setState({
-          isError: res.data.isError,
-          errMsg: res.data.content.errors
+          isError: res.data.isError
         });
         if (res.data.isError === false) {
           var recIndexToEdit = -1;
@@ -344,7 +342,7 @@ parseJwt(token) {
       });
   }
   removeAll() {
-    axios.delete(`/api/${this.state.userID}/recipeDelAll`)
+    axios.delete(`http://localhost:8080/api/recipes/${this.state.userID}`)
       .then(res => {
         //console.log (res.data);
         this.setState({
@@ -362,7 +360,7 @@ parseJwt(token) {
       });
   }
   delAllIngredient(id) {
-    axios.delete(`/api/${this.state.userID}/recipeDelAllIng/${id}`)
+    axios.delete(`http://localhost:8080/api/ing/${id}`)
       .then(res => {
         //console.log(res.data);
         this.setState({
