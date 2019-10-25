@@ -103,12 +103,18 @@ class RecipeCard extends React.Component {
         <div className="card">
           <div className="card-header">
             <h3>{this.props.title}</h3>
-            {
+            {this.props.pageCtrl === 0 ?
               (<div className="row">
                 <button className="ml-2 btn" onClick={this.handleClickEditRecipe} ><i className="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                 <button className="ml-2 btn btn-danger" onClick={this.removeRecipe}><i className="fa fa-trash-o" aria-hidden="true"></i></button>
               </div>
-              ) 
+              ) : (
+
+                <div className="row">
+                  <button className="ml-2 btn" onClick={this.copyRecipe} ><i className="fa fa-files-o" aria-hidden="true"></i></button>
+                </div>
+
+              )
             }
           </div>
           <div className="card-body">
