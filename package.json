@@ -33,7 +33,7 @@
     "react-scripts": "^3.0.1",
     "serve-favicon": "^2.5.0",
     "util": "^0.12.1",
-    "validator": "^11.1.0"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",
